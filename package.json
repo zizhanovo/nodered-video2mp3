@@ -1,5 +1,5 @@
 {
-  "name": "@zizhan/nodered9-video2mp3",
+  "name": "@zizhan/node-red-video2mp3",
   "version": "1.0.0",
   "description": "A Node-RED node that converts video files to MP3 audio files using FFmpeg.",
   "main": "video2mp3.js",
