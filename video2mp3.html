@@ -1,0 +1,87 @@
+<script type="text/html" data-template-name="video2mp3">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> 节点名称</label>
+        <input type="text" id="node-input-name" placeholder="请输入节点名称">
+    </div>
+    <div class="form-row">
+        <label for="node-input-filePath"><i class="fa fa-file"></i> 文件路径</label>
+        <input type="text" id="node-input-filePath" placeholder="请输入视频文件的路径">
+        <input type="hidden" id="node-input-filePath-type">
+    </div>
+    <div class="form-row">
+        <label for="node-input-absoluteOutput"><i class="fa fa-tag"></i> 绝对路径输出字段</label>
+        <input type="text" id="node-input-absoluteOutput" placeholder="请输入绝对路径输出字段，例如 'msg.absolutePath'">
+        <input type="hidden" id="node-input-absoluteOutput-type">
+    </div>
+    <div class="form-row">
+        <label for="node-input-relativeOutput"><i class="fa fa-tag"></i> 相对路径输出字段</label>
+        <input type="text" id="node-input-relativeOutput" placeholder="请输入相对路径输出字段，例如 'msg.relativePath'">
+        <input type="hidden" id="node-input-relativeOutput-type">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="video2mp3">
+    <p>该节点用于将视频文件转换为 MP3 格式。</p>
+    <p><b>配置项</b>：</p>
+    <ul>
+        <li><b>节点名称</b>：节点的可选名称。</li>
+        <li><b>文件路径</b>：需要转换为 MP3 格式的视频文件路径，可以使用 <code>{{msg.xxx}}</code>、<code>{{flow.xxx}}</code>、<code>{{global.xxx}}</code> 格式来引用消息或上下文中的变量。</li>
+        <li><b>绝对路径输出字段</b>：转换后的 MP3 文件的绝对路径，默认为 <code>msg.absolutePath</code>。</li>
+        <li><b>相对路径输出字段</b>：转换后的 MP3 文件的相对路径，默认为 <code>msg.relativePath</code>。</li>
+    </ul>
+    <p><b>输入</b>：</p>
+    <ul>
+        <li><code>msg.payload</code> - 该节点会忽略消息中的文件路径，使用配置的路径。</li>
+    </ul>
+    <p><b>输出</b>：</p>
+    <ul>
+        <li><code>msg.absolutePath</code> - 转换后的 MP3 文件的绝对路径。</li>
+        <li><code>msg.relativePath</code> - 转换后的 MP3 文件的相对路径。</li>
+    </ul>
+    <p>如果在转换过程中出现错误，节点将记录错误信息。</p>
+</script>
+
+<script>
+    RED.nodes.registerType('video2mp3', {
+        category: 'file',
+        color: '#a6bbcf',
+        defaults: {
+            name: { value: "" },
+            filePath: { value: "payload" },  // 增加文件路径配置项
+            filePathType: { value: "msg" },  // 增加文件路径类型配置项
+            absoluteOutput: { value: "payload" },  // 新增绝对路径输出字段
+            absoluteOutputType: { value: "msg" },  // 增加绝对路径输出字段类型配置项
+            relativeOutput: { value: "payload" },  // 新增相对路径输出字段
+            relativeOutputType: { value: "msg" }  // 增加相对路径输出字段类型配置项
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "file.png",
+        label: function() {
+            return this.name || "视频转MP3";
+        },
+        paletteLabel: '视频转MP3',
+        oneditprepare: function() {
+            // 初始化 TypedInput for filePath
+            $("#node-input-filePath").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "str"],
+                typeField: "#node-input-filePath-type"
+            });
+
+            // 初始化 TypedInput for absoluteOutput
+            $("#node-input-absoluteOutput").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "str"],
+                typeField: "#node-input-absoluteOutput-type"
+            });
+
+            // 初始化 TypedInput for relativeOutput
+            $("#node-input-relativeOutput").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "str"],
+                typeField: "#node-input-relativeOutput-type"
+            });
+        }
+    });
+</script>

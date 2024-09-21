@@ -1,0 +1,29 @@
+{
+    "name": "@zizhan/nodered9-video2mp3",
+    "version": "1.3",
+    "description": "A Node-RED node that converts video files to MP3 audio files using FFmpeg.",
+    "main": "video2mp3.js",
+    "scripts": {
+      "pack": "npm pack"
+    },
+    "keywords": ["node-red", "node", "video", "audio", "ffmpeg", "mp3", "media", "convert"],
+    "author": "zizhan",
+    "license": "MIT",
+    "dependencies": {
+      "fluent-ffmpeg": "^2.1.2"
+    },
+    "node-red": {
+      "nodes": {
+        "video2mp3": "video2mp3.js"
+      }
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/michaelting/node-red-video2mp3.git"
+    },
+    "bugs": {
+      "url": "https://github.com/michaelting/node-red-video2mp3/issues"
+    },
+    "homepage": "https://github.com/michaelting/node-red-video2mp3"
+  }
+  
