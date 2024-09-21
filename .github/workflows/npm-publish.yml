@@ -3,24 +3,26 @@ name: Publish to npm
 on:
   push:
     branches:
-      - main
+      - main  # 当代码推送到 main 分支时触发
 
 jobs:
   publish:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out the code
+        uses: actions/checkout@v2  # 检出仓库代码
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # 你可以调整 Node.js 版本
+          node-version: '16'  # 设置使用的 Node.js 版本
+          registry-url: 'https://registry.npmjs.org'  # 设置 npm 注册表为官方 npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm install  # 安装依赖
 
       - name: Publish to npm
-        run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}  # 使用 GitHub Secrets 中的 NPM_TOKEN
+        run: npm publish --access public  # 执行 npm 发布命令
