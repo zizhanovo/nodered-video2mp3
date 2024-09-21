@@ -16,6 +16,9 @@
     "media",
     "convert"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "zizhan",
   "license": "MIT",
   "dependencies": {
